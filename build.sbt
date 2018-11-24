@@ -32,6 +32,7 @@ lazy val scalaGraalVmFunction = (project in file("."))
   .aggregate(main)
 
 lazy val main = (project in file("modules/main"))
+  .enablePlugins(JmhPlugin)
   .settings(commonSettings("main"))
   .settings(
     assemblyOutputPath in assembly := file(s"build/${name.value}.jar")
