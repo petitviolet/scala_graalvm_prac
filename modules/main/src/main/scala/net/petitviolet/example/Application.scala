@@ -15,7 +15,7 @@ class Application {
   private val logger = org.slf4j.LoggerFactory.getLogger(getClass)
 //  private val logger = new Logger()
 
-  def startServer(host: String, port: Int) = {
+  def startServer(host: String, port: Int, isTimeTest: Boolean = false) = {
     val server = BlazeBuilder[IO]
       .bindHttp(port, host)
       .mountService(service, "/")
@@ -23,8 +23,12 @@ class Application {
       .unsafeRunSync()
 
     logger.info("start server.")
-    val _ = StdIn.readLine("press ENTER to stop server \n")
-    logger.info("start shutting down server.")
+    if (isTimeTest) {
+      logger.info("start shutting down immediately.")
+    } else {
+      val _ = StdIn.readLine("press ENTER to stop server \n")
+      logger.info("start shutting down server.")
+    }
 
     server.shutdown.unsafeRunSync()
 
@@ -41,6 +45,7 @@ class Application {
 
 object Main {
   def main(args: Array[String]): Unit = {
-    new Application().startServer("0.0.0.0", 8080)
+    val isTimeTest = try { args(0) == "TimeTest" } catch { case _ => false }
+    new Application().startServer("0.0.0.0", 8080, isTimeTest)
   }
 }
