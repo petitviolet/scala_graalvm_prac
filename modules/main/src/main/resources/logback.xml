@@ -29,22 +29,22 @@
         </encoder>
     </appender>
 
-    <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="STDOUT"/>
-        <queueSize>10000</queueSize>
-    </appender>
+    <!--<appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">-->
+        <!--<appender-ref ref="STDOUT"/>-->
+        <!--<queueSize>10000</queueSize>-->
+    <!--</appender>-->
 
-    <appender name="ASYNC_STDERR" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="STDERR"/>
-        <queueSize>10000</queueSize>
-    </appender>
+    <!--<appender name="ASYNC_STDERR" class="ch.qos.logback.classic.AsyncAppender">-->
+        <!--<appender-ref ref="STDERR"/>-->
+        <!--<queueSize>10000</queueSize>-->
+    <!--</appender>-->
 
     <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->
     <!--<logger name="com.zaxxer.hikari.pool" level="OFF"/>-->
 
-    <root level="${LOG_LEVEL}">
-        <appender-ref ref="ASYNC_STDOUT"/>
-        <appender-ref ref="ASYNC_STDERR"/>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERR"/>
     </root>
 
 </configuration>

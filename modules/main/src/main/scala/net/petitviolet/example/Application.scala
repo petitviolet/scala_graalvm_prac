@@ -12,8 +12,8 @@ class Logger() {
 }
 
 class Application {
-  // private val logger = org.slf4j.LoggerFactory.getLogger(getClass)
-  private val logger = new Logger()
+  private val logger = org.slf4j.LoggerFactory.getLogger(getClass)
+//  private val logger = new Logger()
 
   def startServer(host: String, port: Int) = {
     val server = BlazeBuilder[IO]
