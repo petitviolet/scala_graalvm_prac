@@ -44,8 +44,19 @@ class Application {
 }
 
 object Main {
+  case class HttpConfig(host: String, port: Int)
   def main(args: Array[String]): Unit = {
-    val isTimeTest = try { args(0) == "TimeTest" } catch { case _ => false }
-    new Application().startServer("0.0.0.0", 8080, isTimeTest)
+    val isTimeTest = args contains "TimeTest"
+    @annotation.tailrec
+    def options(input: List[String], config: HttpConfig): HttpConfig = {
+      input match {
+        case Nil                      => config
+        case "--host" :: host :: tail => options(tail, config.copy(host = host))
+        case "--port" :: port :: tail => options(tail, config.copy(port = port.toInt))
+        case _ :: tail                => options(tail, config)
+      }
+    }
+    val config = options(args.toList, HttpConfig("0.0.0.0", 8080))
+    new Application().startServer(config.host, config.port, isTimeTest)
   }
 }
